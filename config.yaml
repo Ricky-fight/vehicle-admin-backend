@@ -1,0 +1,12 @@
+system:
+  port: 8888
+jwt:
+  Domain : lvsheng.com
+  TokenExpireDuration : 8h
+  Secret : lvshengwinwinwin
+mysql:
+  user: root
+  password : Ricky998927
+  host: localhost
+  port : 3306
+  dbname: server
