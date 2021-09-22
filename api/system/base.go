@@ -42,32 +42,41 @@ func Login(c *gin.Context) {
 	}
 	// deal with login
 	if rst := system.Login(u); rst {
-		now := time.Now()
-		expireDuration := global.CONFIG.Jwt.TokenExpireDuration
-		claims := jwtMiddleware.Claims{
-			Account:   loginParam.Account,
+		if loginResponse, err := SigningJWTToken(&loginParam); err != nil {
+			core.FailWithErr(core.AUTH_ERROR, err, c)
+		} else {
+			core.OkWithDetailed(loginResponse, "login success", c)
+		}
+	} else {
+		core.FailWithErr(core.AUTH_ERROR, fmt.Errorf("wrong account or password"), c)
+	}
+}
+
+// 生成jwt令牌
+func SigningJWTToken(user *request.Login) (LoginResponse, error) {
+	now := time.Now()
+	expireDuration := global.CONFIG.Jwt.TokenExpireDuration
+	claims := jwtMiddleware.Claims{
+		Account: user.Account,
+		StandardClaims: jwt.StandardClaims{
 			NotBefore: now.Add(time.Second * -1).Unix(),
 			ExpiresAt: now.Add(expireDuration).Unix(),
-		}
-		fmt.Printf("claims: %+v\n", claims)
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		fmt.Printf("token: %v\n", token)
-		secret := []byte(global.CONFIG.Jwt.Secret)
-		fmt.Printf("secret: %v\n", secret)
-		xToken, err := token.SignedString(secret)
-		if err != nil {
-			core.FailWithMessage("生成JWT签名时发生错误: "+err.Error(), c)
-		}
+		},
+	}
+	// fmt.Printf("claims: %+v\n", claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	// fmt.Printf("token: %v\n", token)
+	secret := []byte(global.CONFIG.Jwt.Secret)
+	// fmt.Printf("secret: %v\n", secret)
+
+	if xToken, err := token.SignedString(secret); err != nil {
+		return LoginResponse{}, err
+	} else {
 		l := LoginResponse{
-			Account:   loginParam.Account,
+			Account:   user.Account,
 			Token:     xToken,
 			ExpiresAt: claims.ExpiresAt * 1000,
 		}
-		core.OkWithData(l, c)
-		return
-	} else {
-		core.FailWithAuth(loginParam, c)
-		return
+		return l, nil
 	}
-
 }

@@ -67,6 +67,6 @@ func FailWithValidation(data interface{}, c *gin.Context) {
 func FailWithBadRequest(c *gin.Context) {
 	Result(BAD_REQUEST_ERROR, EmptyData, "bad request", c)
 }
-func FailWithAuth(data interface{}, c *gin.Context) {
-	Result(AUTH_ERROR, data, "账号或密码错误", c)
+func FailWithErr(code int, err error, c *gin.Context) {
+	Result(code, EmptyData, err.Error(), c)
 }

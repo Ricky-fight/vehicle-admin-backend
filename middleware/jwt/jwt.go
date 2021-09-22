@@ -1,16 +1,18 @@
 package jwt
 
+import "github.com/dgrijalva/jwt-go"
+
 type Claims struct {
-	Account   string `json:"sub"`
-	NotBefore int64  `json:"nbf,omitempty"`
-	ExpiresAt int64  `json:"exp,omitempty"`
+	Account string `json:"sub"`
+	// NotBefore int64  `json:"nbf,omitempty"`
+	// ExpiresAt int64  `json:"exp,omitempty"`
 	// IP   string // TODO 获取ip作为验证依据，防止重放攻击
-	// jwt.StandardClaims
+	jwt.StandardClaims
 }
 
-func (c Claims) Valid() error {
-	return nil
-}
+// func (c Claims) Valid() error {
+// 	return c.StandardClaims.Valid()
+// }
 
 // jwt简介：
 // https://www.jianshu.com/p/576dbf44b2ae
