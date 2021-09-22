@@ -1,7 +1,7 @@
 package database
 
 type User struct {
-	Account  string
+	Account  string `gorm:"unique"`
 	Password string
 	Model
 }

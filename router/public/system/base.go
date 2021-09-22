@@ -12,6 +12,7 @@ func (r BaseRouterGroup) Register(Router *gin.RouterGroup) {
 	baseRouter := Router.Group("base")
 	{
 		baseRouter.POST("login", system.Login)
+		baseRouter.POST("register", system.Register)
 	}
 }
 

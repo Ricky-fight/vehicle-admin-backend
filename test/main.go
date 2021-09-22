@@ -3,28 +3,21 @@ package main
 import (
 	"fmt"
 
-	"github.com/spf13/viper"
+	"github.com/Ricky-fight/car-admin-server/global"
+	"github.com/Ricky-fight/car-admin-server/initialize"
+	"github.com/Ricky-fight/car-admin-server/model/database"
 )
 
 func main() {
-	viper.AddConfigPath(".")
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
-	err := viper.ReadInConfig()
-	if err != nil {
-		fmt.Println(err)
+	initialize.Init()
+	u := database.User{
+		Account:  "111",
+		Password: "11",
 	}
-	m := viper.GetStringMap("mysql")
-	fmt.Println(m)
-	dbType := "mysql"
-	dbConfig := viper.GetStringMap(dbType)
-	dsn := fmt.Sprintf(
-		"%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
-		dbConfig["user"],
-		dbConfig["password"],
-		dbConfig["host"],
-		dbConfig["port"],
-		dbConfig["dbname"],
-	)
-	fmt.Println(dsn)
+	var u1 database.User
+	err := global.DB.FirstOrCreate(&u1, u).Error
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+	}
+	fmt.Printf("u1: %v\n", u1)
 }

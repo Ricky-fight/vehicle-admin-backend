@@ -60,8 +60,8 @@ func FailWithDetailed(data interface{}, message string, c *gin.Context) {
 	Result(ERROR, data, message, c)
 }
 
-func FailWithValidation(data interface{}, c *gin.Context) {
-	Result(VALIDATE_ERROR, data, "fail to validate data", c)
+func FailWithValidation(err error, c *gin.Context) {
+	Result(VALIDATE_ERROR, EmptyData, "invalid params:"+err.Error(), c)
 }
 
 func FailWithBadRequest(c *gin.Context) {
