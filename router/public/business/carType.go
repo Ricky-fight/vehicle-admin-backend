@@ -5,11 +5,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type carTypeRouterGroup struct {
+type VehicleTypeRouterGroup struct {
 	Path string
 }
 
-func (r carTypeRouterGroup) Register(Router *gin.RouterGroup) {
+func (r VehicleTypeRouterGroup) Register(Router *gin.RouterGroup) {
 	carTypeRouter := Router.Group("")
 	{
 		path := carType.Path
@@ -21,6 +21,6 @@ func (r carTypeRouterGroup) Register(Router *gin.RouterGroup) {
 	}
 }
 
-var carType = carTypeRouterGroup{
+var carType = VehicleTypeRouterGroup{
 	"cartypes",
 }
