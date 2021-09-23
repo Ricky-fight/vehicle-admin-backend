@@ -1,6 +1,8 @@
 package config
 
-import "time"
+import (
+	"time"
+)
 
 type Config struct {
 	Mysql  Mysql  `mapstructure:"mysql"`  // mysql配置
@@ -17,7 +19,8 @@ type Mysql struct {
 }
 
 type System struct {
-	Port string `mapstructure:"port"` // 服务器运行端口
+	Debug bool   `mapstructure:"debug"` // debug 开关，影响到各种模块的配置
+	Port  string `mapstructure:"port"`  // 服务器运行端口
 }
 
 type Jwt struct {

@@ -4,6 +4,20 @@ import (
 	"time"
 )
 
+type VehicleTypeRent struct {
+	VehicleTypeID uint // FK 车型
+	Deposit       uint // 押金
+	MonthlyRent   uint // 租金
+	Model
+}
+type VehicleType struct {
+	Brand    string          // 厂牌
+	TypeNo   string          // 车型代号
+	Series   string          // 车系
+	Rent     VehicleTypeRent // FK 车型基准租金
+	Vehicles []Vehicle       // FK 下属车辆
+	Model
+}
 type Vehicle struct {
 	// CID string
 	LicenseNo string // 车牌号
@@ -18,20 +32,6 @@ type Vehicle struct {
 	Model
 }
 
-type VehicleType struct {
-	Brand                 string          // 厂牌
-	TypeNo                string          // 车型代号
-	Series                string          // 车系
-	VehicleRentContractID uint            // FK 车型基准租金
-	VehicleTypeRent       VehicleTypeRent // FK 车型基准租金
-	Vehicles              []Vehicle       // FK 下属车辆
-	Model
-}
-type VehicleTypeRent struct {
-	VehicleTypeID uint // FK 车型
-	Deposit       uint // 押金
-	MonthlyRent   uint // 租金
-}
 type Client struct {
 	// Type           bool   // 客户类型,先默认全部为司机客户，后续添加公司客户管理再增加此子段
 	Name string // 客户名称
@@ -60,4 +60,5 @@ type VehicleRentContract struct {
 	MonthlyRent      uint      // 月租金
 	BillingCycle     bool      // false月付/true周付
 	FirstBillingDate time.Time // 首次付租日期
+	Model
 }

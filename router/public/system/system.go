@@ -7,13 +7,15 @@ import (
 
 type SystemRouterGroup map[string]core.ApiRouter
 
+var Path = "system"
+
 func (r SystemRouterGroup) Register(Router *gin.RouterGroup) {
-	systemRouter := Router.Group("system")
+	systemRouter := Router.Group(Path)
 	for _, v := range r {
 		v.Register(systemRouter)
 	}
 }
 
 var RouterGroup = SystemRouterGroup{
-	"base": base,
+	base.Path: base,
 }
