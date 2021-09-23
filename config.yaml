@@ -1,4 +1,5 @@
 system:
+  debug: true
   port: 8888
 jwt:
   Domain : lvsheng.com

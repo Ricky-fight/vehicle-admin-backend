@@ -31,6 +31,9 @@ func DB() (db *gorm.DB) {
 	if err != nil {
 		panic(err)
 	}
+	if global.CONFIG.System.Debug {
+		db = db.Debug()
+	}
 	// 自动迁移数据表
 	MigrateTables(db)
 	return

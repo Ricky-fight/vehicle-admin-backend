@@ -1,4 +1,4 @@
-package system
+package business
 
 import (
 	"github.com/Ricky-fight/car-admin-server/core"
@@ -7,7 +7,7 @@ import (
 
 type SystemRouterGroup map[string]core.ApiRouter
 
-var Path = "system"
+var Path = ""
 
 func (r SystemRouterGroup) Register(Router *gin.RouterGroup) {
 	systemRouter := Router.Group(Path)
@@ -17,5 +17,5 @@ func (r SystemRouterGroup) Register(Router *gin.RouterGroup) {
 }
 
 var RouterGroup = SystemRouterGroup{
-	base.Path: base,
+	carType.Path: carType,
 }

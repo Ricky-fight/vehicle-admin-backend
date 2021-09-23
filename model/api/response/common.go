@@ -11,6 +11,15 @@ type Response struct {
 	Data interface{} `json:"data"`
 	Msg  string      `json:"msg"`
 }
+
+// PageResult 查询结果列表，返回时作为data嵌入Response
+type PageResult struct {
+	List     interface{} `json:"list"`
+	Total    int64       `json:"total"`
+	Page     int         `json:"page"`
+	PageSize int         `json:"pageSize"`
+}
+
 type EmptyData map[string]interface{}
 
 const (
