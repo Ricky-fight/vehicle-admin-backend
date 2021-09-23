@@ -24,11 +24,10 @@ type Vehicle struct {
 	VIN       string // 车架号/车辆识别代号
 	EngineNo  string // 发动机号
 	// UseNature     uint
-	VehicleTypeID         uint                // FK 车型
-	VehicleType           VehicleType         // 车型实体
-	EnrollDate            time.Time           // 初登日期
-	VehicleRentContractID uint                // FK 车辆租赁合同
-	VehicleRentContract   VehicleRentContract // FK 车辆租赁合同
+	VehicleTypeID uint                  // FK 车型
+	VehicleType   VehicleType           // 车型实体
+	EnrollDate    time.Time             // 初登日期
+	Contracts     []VehicleRentContract // FK hasMany 车辆租赁合同
 	Model
 }
 
@@ -36,9 +35,9 @@ type Client struct {
 	// Type           bool   // 客户类型,先默认全部为司机客户，后续添加公司客户管理再增加此子段
 	Name string // 客户名称
 	// CredentialType int
-	CredentialNo        string                // 证件号码，后续为区别证件类型会增加字段
-	ClientContact       ClientContact         // FK 联系方式
-	VehicleRentContract []VehicleRentContract // FK hasmany 车辆租赁合同
+	CredentialNo  string                // 证件号码，后续为区别证件类型会增加字段
+	ClientContact ClientContact         // FK 联系方式
+	Contracts     []VehicleRentContract // FK hasMany 车辆租赁合同
 	Model
 }
 

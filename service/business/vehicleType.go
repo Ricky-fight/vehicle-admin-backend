@@ -5,6 +5,8 @@ import (
 	"github.com/Ricky-fight/car-admin-server/global"
 	"github.com/Ricky-fight/car-admin-server/model/api/request"
 	"github.com/Ricky-fight/car-admin-server/model/database"
+	"github.com/kr/pretty"
+	"gorm.io/gorm"
 )
 
 // CreateVehicleType 创建车型
@@ -38,7 +40,8 @@ func UpdateVehicleType(vt *database.VehicleType) error {
 	if vt.ID == 0 {
 		return fmt.Errorf("ID hasn't given")
 	}
-	if err := global.DB.Model(vt).Updates(vt).Error; err != nil {
+	pretty.Println(vt.Rent)
+	if err := global.DB.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&vt).Error; err != nil {
 		return err
 	}
 	return nil

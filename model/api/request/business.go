@@ -6,3 +6,8 @@ type VehicleTypeSearch struct {
 	database.VehicleType
 	PageInfo
 }
+
+type VehicleSearch struct {
+	database.Vehicle
+	PageInfo
+}
